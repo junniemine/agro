@@ -1,117 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="./src/style.css">
+    <script src="https://clickbattle2025.web.app/click-battle.js"></script>
     <title>Title</title>
 </head>
-<style>
-  body {
-    margin: 0;
-    background: #f5f5f5;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
 
-  .news-wrap {
-    width: 100%;
-    max-width: 430px;
-    background: white;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0,0,0,0.15);
-  }
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: bold;
-  }
-
-  .logo-icon {
-    width: 28px;
-    height: 28px;
-    background: black;
-    color: white;
-    border-radius: 50%;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  h1 {
-    font-size: 22px;
-    font-weight: 800;
-    line-height: 1.3;
-    margin-bottom: 8px;
-  }
-
-  .info-row {
-    display: flex;
-    gap: 6px;
-    font-size: 13px;
-    color: #777;
-    margin-bottom: 12px;
-  }
-
-  .thumb {
-    border-radius: 10px;
-    border: 1px solid #ddd;
-     width: 100%;
-  height: auto;
-     border-radius: 10px;
-  border: 1px solid #ddd;
-  }
-
-  .click-btn {
-    width: 100%;
-    padding: 14px;
-    background: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    margin-top: 14px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: 0.1s;
-  }
-
-  .click-btn:active {
-    transform: scale(0.97);
-  }
-
-  .article {
-    margin-top: 20px;
-    line-height: 1.55;
-    color: #333;
-    font-size: 15px;
-  }
-
-  footer {
-    padding: 16px;
-    border-top: 1px solid #eee;
-    font-size: 13px;
-    color: #777;
-    display: flex;
-    justify-content: space-between;
-  }
-</style>
 <body>
 
-    <div class="news-wrap">
+<div class="news-wrap">
   <div class="header">
     <div class="logo">
       <div class="logo-icon">픽</div>
@@ -126,7 +26,10 @@
     <div class="info-row">
       <span>익명남성</span>·<span>조회수 314,656</span>·<span>댓글 5,374</span>
     </div>
-    <img src = '뉴스사진.png' class = 'thumb'>
+
+    <img src="뉴스사진.png" class="thumb">
+
+    <!-- 첫 번째 클릭 영역 -->
     <div id="click-area">
       <button class="click-btn" onclick="handleClick()">클릭 열번 하여 계속 읽기</button>
       <div style="text-align:center; margin-top:10px; font-size:13px; color:#777;">원치 않을 경우 뒤로가기</div>
@@ -135,6 +38,7 @@
       </div>
     </div>
 
+    <!-- 기사 본문 (줄 하나씩 누적) -->
     <div id="article" class="article" style="display:none;">
       <div id="linesContainer"></div>
 
@@ -146,68 +50,18 @@
       </div>
     </div>
 
+  </div>
+  
+<div id="shareBubble" class="share-bubble" style="display:none;">
+  재밌었으면 공유하기 📢
+</div>
   <footer>
-    <div>조회수 · 추천 · 공유</div>
+    <div>조회수 · 추천 <span class="share-btn" onclick="shareArticle()">공유</span></div>
     <div>뉴스픽</div>
   </footer>
+
 </div>
-    <script type="module" src="./src/main.js"></script>
+
+<script src="./src/main.js"></script>
 </body>
-<script>
-let totalSteps = 10;       
-let currentStep = 0;       
-let clickCount = 0;        
-
-const stepTexts = [
-  "어젯밤, 썸남이 갑자기 새벽 2시에 메시지를 하나 보냈다.",
-  "평소 그 아이가 보내던 말투가 아니었다.",
-  "짧은 이모티콘 하나, 그리고 ‘왔어?’라는 말.",
-  "문제는… 나는 그 시간에 자고 있었고, 연락한 적도 없었다.",
-  "댓글에서는 모두 ‘전 애인 아니냐’, ‘기억 안 나는 대화?’라며 난리가 났다.",
-  "하지만 진짜 반전은 따로 있었다. 그 메시지는… 나에게 온 게 아니었다.",
-  "그 번호는 저장조차 되어 있지 않았다.",
-  "심지어 통신사 오류도 아니었다.",
-  "다음날, 그 아이에게 물어보니 그는 그런 메시지를 보낸 적이 없다고 했다.",
-  "결국… 그 메시지는 ‘전 주인’의 iCloud 동기화 오류였다."
-];
-
-function handleClick() {
-  clickCount++;
-  document.getElementById("count").innerText = clickCount % 10;
-
-  if (clickCount === 10) {
-    document.getElementById("click-area").style.display = "none";
-    document.getElementById("article").style.display = "block";
-
-    const container = document.getElementById("linesContainer");
-    const p = document.createElement("p");
-    p.innerText = stepTexts[0];
-    container.appendChild(p);
-
-    currentStep = 1;
-    document.getElementById("stepClick").innerText = "0";
-  }
-}
-
-function nextClick() {
-  clickCount++;
-  document.getElementById("stepClick").innerText = clickCount % 10;
-
-  if (clickCount % 10 === 0) {
-    if (currentStep < totalSteps) {
-      const container = document.getElementById("linesContainer");
-
-      const p = document.createElement("p");
-      p.innerText = stepTexts[currentStep];
-      container.appendChild(p);
-
-      currentStep++;
-
-      if (currentStep === totalSteps) {
-        document.getElementById("nextBtn").style.display = "none";
-      }
-    }
-  }
-}
-</script>
 </html>
