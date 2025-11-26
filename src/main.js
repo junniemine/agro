@@ -1,6 +1,4 @@
 
-ClickBattle.recordClick();
-
 let totalSteps = 10;       
 let currentStep = 0;       
 let clickCount = 0;        
