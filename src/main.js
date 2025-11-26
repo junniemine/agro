@@ -1,4 +1,4 @@
-ClickBattle.init("han"); // 자기 닉네임
+
 ClickBattle.recordClick();
 
 let totalSteps = 10;       
